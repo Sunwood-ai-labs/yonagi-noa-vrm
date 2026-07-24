@@ -2,19 +2,53 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { VRMLoaderPlugin } from "@pixiv/three-vrm";
+import { createLiquid } from "./canvasui/LiquidVanilla.ts";
 import "./style.css";
 
 const canvas = document.querySelector("#vrm-canvas");
+const app = document.querySelector("#app");
+const liquidSource = document.querySelector("#liquid-source");
+const liquidOutput = document.querySelector("#liquid-output");
 const viewerShell = document.querySelector(".viewer-shell");
+const viewerZone = document.querySelector(".viewer-zone");
 const loadingPanel = document.querySelector("#loading");
 const loadingValue = document.querySelector("#loading-value");
 const loadingBar = document.querySelector("#loading-bar");
 const errorPanel = document.querySelector("#error-panel");
 const modelStatus = document.querySelector("#model-status");
+const headerStatus = document.querySelector("#header-status");
 const rotateButton = document.querySelector("#rotate-button");
 const lightButton = document.querySelector("#light-button");
 const resetButton = document.querySelector("#reset-button");
 const fullscreenButton = document.querySelector("#fullscreen-button");
+
+const liquid = createLiquid(
+  {
+    source: liquidSource,
+    content: app,
+    output: liquidOutput,
+  },
+  {
+    simResolution: 96,
+    dyeResolution: 384,
+    densityDissipation: 0.965,
+    velocityDissipation: 0.985,
+    pressureIterations: 4,
+    curl: 2.2,
+    radius: 0.2,
+    force: 0.82,
+    intensity: 1.55,
+    distortion: 0.16,
+    blend: 1.8,
+    color: [0.408, 0.961, 0.698],
+    rainbow: false,
+  },
+);
+
+window.setTimeout(() => {
+  liquid?.splat(0.52, 0.48, 18, -7);
+  liquid?.splat(0.72, 0.32, -10, 9);
+}, 420);
 
 const renderer = new THREE.WebGLRenderer({
   canvas,
@@ -72,10 +106,10 @@ function setRelaxedPose(vrm) {
   const rightLowerArm = humanoid?.getNormalizedBoneNode("rightLowerArm");
   const head = humanoid?.getNormalizedBoneNode("head");
 
-  if (leftUpperArm) leftUpperArm.rotation.z = -0.56;
-  if (rightUpperArm) rightUpperArm.rotation.z = 0.56;
-  if (leftLowerArm) leftLowerArm.rotation.y = -0.08;
-  if (rightLowerArm) rightLowerArm.rotation.y = 0.08;
+  if (leftUpperArm) leftUpperArm.rotation.z = -1.08;
+  if (rightUpperArm) rightUpperArm.rotation.z = 1.08;
+  if (leftLowerArm) leftLowerArm.rotation.y = -0.12;
+  if (rightLowerArm) rightLowerArm.rotation.y = 0.12;
   if (head) head.rotation.y = -0.04;
 }
 
@@ -126,6 +160,8 @@ loader.load(
     loadingValue.textContent = "100%";
     loadingBar.style.width = "100%";
     modelStatus.textContent = "MODEL ONLINE";
+    headerStatus.textContent = "SYNCHRONIZED";
+    liquid?.splat(0.54, 0.52, 22, 4);
     window.setTimeout(() => {
       loadingPanel.hidden = true;
     }, 360);
@@ -138,6 +174,7 @@ loader.load(
     loadingPanel.hidden = true;
     errorPanel.hidden = false;
     modelStatus.textContent = "MODEL ERROR";
+    headerStatus.textContent = "SIGNAL LOST";
   },
 );
 
@@ -174,6 +211,11 @@ lightButton.addEventListener("click", () => {
   keyLight.color.set(moonMode ? 0x8da9ff : 0xffe2b0);
   fillLight.color.set(moonMode ? 0x365882 : 0x8ebbd8);
   rimLight.intensity = moonMode ? 3.2 : 1.9;
+  liquid?.setOptions({
+    color: moonMode ? [0.28, 0.46, 1] : [0.408, 0.961, 0.698],
+    intensity: moonMode ? 1.9 : 1.55,
+  });
+  liquid?.splat(0.56, 0.44, moonMode ? -24 : 20, moonMode ? 12 : -8);
   lightButton.classList.toggle("active", moonMode);
   lightButton.setAttribute("aria-pressed", String(moonMode));
 });
@@ -188,7 +230,7 @@ resetButton.addEventListener("click", () => {
 fullscreenButton.addEventListener("click", async () => {
   try {
     if (!document.fullscreenElement) {
-      await viewerShell.requestFullscreen();
+      await viewerZone.requestFullscreen();
     } else {
       await document.exitFullscreen();
     }
@@ -198,3 +240,4 @@ fullscreenButton.addEventListener("click", async () => {
 });
 
 document.addEventListener("fullscreenchange", resize);
+window.addEventListener("pagehide", () => liquid?.destroy(), { once: true });

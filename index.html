@@ -5,107 +5,190 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="AI人狼キャラクター・夜凪 ノアのVRMインタラクティブプレビュー"
+      content="AI人狼キャラクター・夜凪 ノアのインタラクティブVRMシグナルアーカイブ"
     />
-    <meta name="theme-color" content="#09101d" />
-    <title>夜凪 ノア — VRM Observatory</title>
+    <meta name="theme-color" content="#05080a" />
+    <title>夜凪 ノア — NOCTURNE SIGNAL</title>
   </head>
   <body>
-    <div id="app">
-      <header class="site-header">
-        <a class="wordmark" href="#" aria-label="夜凪ノア ホーム">
-          <span class="wordmark-mark" aria-hidden="true">☾</span>
-          <span>YONAGI NOA</span>
-        </a>
-        <div class="header-meta">
-          <span>VRM 1.0</span>
-          <span class="status-dot" aria-hidden="true"></span>
-          <span>AI WEREWOLF</span>
-        </div>
-      </header>
+    <div id="liquid-stage">
+      <canvas id="liquid-source" aria-hidden="true"></canvas>
 
-      <main>
-        <section class="hero" aria-labelledby="character-name">
-          <div class="hero-copy">
-            <p class="eyebrow">CHARACTER ARCHIVE / 001</p>
-            <h1 id="character-name"><span>夜凪</span> ノア</h1>
-            <p class="reading">YONAGI NOA</p>
-            <p class="tagline">その微笑みは、<br />真実か。罠か。</p>
-            <div class="profile-line">
-              <span>ROLE</span>
-              <strong>静かな観察者</strong>
-            </div>
+      <div id="app">
+        <header class="site-header">
+          <a class="identity" href="#" aria-label="夜凪ノア ホーム">
+            <span class="identity-sigil" aria-hidden="true">
+              <i></i><i></i>
+            </span>
+            <span>
+              <b>YONAGI / NOA</b>
+              <small>NOCTURNE SIGNAL ARCHIVE</small>
+            </span>
+          </a>
+
+          <div class="header-signal">
+            <span class="signal-pulse" aria-hidden="true"></span>
+            <span>AVATAR LINK</span>
+            <strong id="header-status">CONNECTING</strong>
           </div>
 
-          <div class="viewer-shell">
-            <div class="orbit orbit-one" aria-hidden="true"></div>
-            <div class="orbit orbit-two" aria-hidden="true"></div>
-            <canvas id="vrm-canvas" aria-label="夜凪ノアの3Dモデル"></canvas>
+          <a
+            class="repo-link"
+            href="https://github.com/Sunwood-ai-labs/yonagi-noa-vrm"
+          >
+            <span>GITHUB</span>
+            <b>↗</b>
+          </a>
+        </header>
 
-            <div id="loading" class="loading-panel" role="status" aria-live="polite">
-              <span class="loading-kicker">SUMMONING AVATAR</span>
-              <strong id="loading-value">0%</strong>
-              <span class="loading-track"><i id="loading-bar"></i></span>
-            </div>
-
-            <div id="error-panel" class="error-panel" hidden>
-              <strong>モデルを読み込めませんでした</strong>
-              <span>WebGL対応ブラウザで再読み込みしてください。</span>
-            </div>
-
-            <div class="viewer-hint">
-              <span>DRAG TO ORBIT</span>
-              <span>SCROLL TO ZOOM</span>
-            </div>
+        <main class="signal-shell">
+          <div class="giant-type" aria-hidden="true">
+            <span class="giant-noa">NOA</span>
+            <span class="giant-jp">夜凪</span>
           </div>
 
-          <aside class="character-notes" aria-label="キャラクター情報">
-            <div class="note-index">01</div>
-            <dl>
-              <div><dt>EYES</dt><dd>Emerald</dd></div>
-              <div><dt>COLORS</dt><dd>Midnight / Gold</dd></div>
-              <div><dt>MOTIF</dt><dd>Moonlit Fox</dd></div>
-              <div><dt>CLASS</dt><dd>Observer</dd></div>
+          <section class="intro" aria-labelledby="character-name">
+            <p class="serial">CASE FILE <b>№ 001</b></p>
+            <h1 id="character-name">
+              <span class="name-jp">夜凪 ノア</span>
+              <span class="name-en">YONAGI<br />NOA</span>
+            </h1>
+            <div class="tagline">
+              <span class="tagline-rule" aria-hidden="true"></span>
+              <p>その微笑みは、<br /><em>真実か。罠か。</em></p>
+            </div>
+          </section>
+
+          <section class="viewer-zone" aria-label="夜凪ノア 3Dモデル">
+            <div class="scanner-frame" aria-hidden="true">
+              <span class="corner corner-a"></span>
+              <span class="corner corner-b"></span>
+              <span class="corner corner-c"></span>
+              <span class="corner corner-d"></span>
+              <span class="scan-line"></span>
+              <span class="axis axis-x">X—47.81</span>
+              <span class="axis axis-y">Y—09.24</span>
+            </div>
+
+            <div class="viewer-shell">
+              <canvas id="vrm-canvas" aria-label="夜凪ノアの3Dモデル"></canvas>
+
+              <div id="loading" class="loading-panel" role="status" aria-live="polite">
+                <span>RECONSTRUCTING AVATAR</span>
+                <strong id="loading-value">0%</strong>
+                <i><b id="loading-bar"></b></i>
+              </div>
+
+              <div id="error-panel" class="error-panel" hidden>
+                <strong>SIGNAL LOST</strong>
+                <span>WebGL対応ブラウザで再読み込みしてください。</span>
+              </div>
+            </div>
+
+            <div class="interaction-hint">
+              <span>DRAG</span>
+              <i></i>
+              <span>ORBIT</span>
+              <i></i>
+              <span>SCROLL</span>
+              <i></i>
+              <span>ZOOM</span>
+            </div>
+          </section>
+
+          <aside class="dossier" aria-label="キャラクター分析">
+            <div class="dossier-heading">
+              <span>PERSONA ANALYSIS</span>
+              <b>01—04</b>
+            </div>
+
+            <dl class="metrics">
+              <div>
+                <dt>OBSERVATION</dt>
+                <dd><span style="--value: 92%"></span><b>92</b></dd>
+              </div>
+              <div>
+                <dt>TRUST SIGNAL</dt>
+                <dd><span style="--value: 78%"></span><b>78</b></dd>
+              </div>
+              <div>
+                <dt>DECEPTION</dt>
+                <dd><span style="--value: 64%"></span><b>64</b></dd>
+              </div>
             </dl>
-            <p>
-              月明かりのように静かで、相手の言葉を一つも取りこぼさない。
-              信頼を集める微笑みの奥に、最後まで読めない思考を隠している。
-            </p>
+
+            <blockquote>
+              “月明かりのように静かで、<br />
+              相手の言葉をひとつも取りこぼさない。”
+            </blockquote>
+
+            <div class="traits">
+              <span>EMERALD EYES</span>
+              <span>MIDNIGHT / GOLD</span>
+              <span>MOONLIT FOX</span>
+              <span>OBSERVER</span>
+            </div>
           </aside>
-        </section>
 
-        <section class="control-deck" aria-label="3D表示コントロール">
-          <div class="control-title">
-            <span>OBSERVATORY CONTROL</span>
-            <strong id="model-status">MODEL LOADING</strong>
-          </div>
-          <div class="controls">
+          <nav class="control-rail" aria-label="3D表示コントロール">
+            <div class="control-status">
+              <span>STATUS</span>
+              <strong id="model-status">MODEL LOADING</strong>
+            </div>
+
             <button id="rotate-button" class="control" type="button" aria-pressed="false">
-              <span class="control-icon" aria-hidden="true">↻</span>
-              AUTO ORBIT
+              <span>01</span>
+              <b>AUTO ORBIT</b>
+              <i aria-hidden="true"></i>
             </button>
-            <button id="light-button" class="control" type="button" aria-pressed="false">
-              <span class="control-icon" aria-hidden="true">◐</span>
-              MOON LIGHT
-            </button>
-            <button id="reset-button" class="control" type="button">
-              <span class="control-icon" aria-hidden="true">◎</span>
-              RESET VIEW
-            </button>
-            <button id="fullscreen-button" class="control" type="button">
-              <span class="control-icon" aria-hidden="true">⛶</span>
-              FULL SCREEN
-            </button>
-          </div>
-        </section>
-      </main>
 
-      <footer>
-        <span>© 2026 YONAGI NOA ARCHIVE</span>
-        <span>MODEL DATA: VRM 1.0</span>
-        <a href="https://github.com/Sunwood-ai-labs/yonagi-noa-vrm">VIEW SOURCE ↗</a>
-      </footer>
+            <button id="light-button" class="control" type="button" aria-pressed="false">
+              <span>02</span>
+              <b>MOON PHASE</b>
+              <i aria-hidden="true"></i>
+            </button>
+
+            <button id="reset-button" class="control" type="button">
+              <span>03</span>
+              <b>RESET VIEW</b>
+              <i aria-hidden="true"></i>
+            </button>
+
+            <button id="fullscreen-button" class="control" type="button">
+              <span>04</span>
+              <b>FULL SIGNAL</b>
+              <i aria-hidden="true"></i>
+            </button>
+          </nav>
+        </main>
+
+        <footer class="ticker">
+          <div>
+            <span>AI WEREWOLF CHARACTER</span>
+            <i>◆</i>
+            <span>VRM 1.0</span>
+            <i>◆</i>
+            <span>INTERACTIVE PERSONA</span>
+            <i>◆</i>
+            <span>CANVAS UI LIQUID ENGINE</span>
+            <i>◆</i>
+          </div>
+          <div aria-hidden="true">
+            <span>AI WEREWOLF CHARACTER</span>
+            <i>◆</i>
+            <span>VRM 1.0</span>
+            <i>◆</i>
+            <span>INTERACTIVE PERSONA</span>
+            <i>◆</i>
+            <span>CANVAS UI LIQUID ENGINE</span>
+            <i>◆</i>
+          </div>
+        </footer>
+      </div>
+
+      <canvas id="liquid-output" aria-hidden="true"></canvas>
     </div>
+
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
