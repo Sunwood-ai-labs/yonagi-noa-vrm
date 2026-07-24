@@ -6,6 +6,12 @@ const motionFiles = [
   ["motions/specs/02-accuse.json", "public/motions/02-accuse.vrma"],
   ["motions/specs/03-deny.json", "public/motions/03-deny.vrma"],
   ["motions/specs/04-victory.json", "public/motions/04-victory.vrma"],
+  ["motions/specs/05-idle-breathe.json", "public/motions/05-idle-breathe.vrma"],
+  ["motions/specs/06-idle-listen.json", "public/motions/06-idle-listen.vrma"],
+  ["motions/specs/07-idle-suspicion.json", "public/motions/07-idle-suspicion.vrma"],
+  ["motions/specs/08-talk-calm.json", "public/motions/08-talk-calm.vrma"],
+  ["motions/specs/09-talk-whisper.json", "public/motions/09-talk-whisper.vrma"],
+  ["motions/specs/10-talk-press.json", "public/motions/10-talk-press.vrma"],
 ];
 
 function assert(condition, message) {
@@ -42,6 +48,22 @@ for (const [specPath, vrmaPath] of motionFiles) {
   assert(animation?.name === spec.name, `${vrmaPath}: animation name mismatch`);
   assert(animation.channels.length > 0, `${vrmaPath}: animation has no channels`);
   assert(Math.abs(duration - spec.duration) < 0.001, `${vrmaPath}: duration mismatch`);
+  if (spec.loop) {
+    for (const [bone, keys] of Object.entries(spec.tracks ?? {})) {
+      assert(keys[0].t === 0, `${specPath}: ${bone} loop must begin at 0`);
+      assert(keys.at(-1).t === spec.duration, `${specPath}: ${bone} loop must end at duration`);
+      assert(
+        JSON.stringify(keys[0].r) === JSON.stringify(keys.at(-1).r),
+        `${specPath}: ${bone} loop endpoints differ`,
+      );
+    }
+    assert(spec.hips?.[0].t === 0, `${specPath}: hips loop must begin at 0`);
+    assert(spec.hips?.at(-1).t === spec.duration, `${specPath}: hips loop must end at duration`);
+    assert(
+      JSON.stringify(spec.hips[0].p) === JSON.stringify(spec.hips.at(-1).p),
+      `${specPath}: hips loop endpoints differ`,
+    );
+  }
 
   console.log(
     `OK ${basename(vrmaPath)}: ${duration.toFixed(1)}s, ${animation.channels.length} channels, VRMA ${extension.specVersion}`,

@@ -27,6 +27,8 @@ const lightButton = document.querySelector("#light-button");
 const resetButton = document.querySelector("#reset-button");
 const fullscreenButton = document.querySelector("#fullscreen-button");
 const motionButtons = [...document.querySelectorAll(".motion-trigger")];
+const motionTabs = [...document.querySelectorAll("[data-motion-filter]")];
+const motionPanels = [...document.querySelectorAll("[data-motion-panel]")];
 const motionStatus = document.querySelector("#motion-status");
 const motionStopButton = document.querySelector("#motion-stop");
 
@@ -50,6 +52,36 @@ const motions = {
     label: "勝利 / VICTORY",
     url: "./motions/04-victory.vrma",
     loop: false,
+  },
+  "idle-breathe": {
+    label: "静かな呼吸 / BREATHE",
+    url: "./motions/05-idle-breathe.vrma",
+    loop: true,
+  },
+  "idle-listen": {
+    label: "気配を聴く / LISTEN",
+    url: "./motions/06-idle-listen.vrma",
+    loop: true,
+  },
+  "idle-suspicion": {
+    label: "疑念を読む / SUSPICION",
+    url: "./motions/07-idle-suspicion.vrma",
+    loop: true,
+  },
+  "talk-calm": {
+    label: "冷静な説明 / CALM",
+    url: "./motions/08-talk-calm.vrma",
+    loop: true,
+  },
+  "talk-whisper": {
+    label: "秘密の囁き / WHISPER",
+    url: "./motions/09-talk-whisper.vrma",
+    loop: true,
+  },
+  "talk-press": {
+    label: "核心を追及 / PRESS",
+    url: "./motions/10-talk-press.vrma",
+    loop: true,
   },
 };
 
@@ -198,6 +230,18 @@ function setMotionButtonsEnabled(enabled) {
   });
 }
 
+function selectMotionCategory(category, { focus = false } = {}) {
+  motionTabs.forEach((tab) => {
+    const selected = tab.dataset.motionFilter === category;
+    tab.setAttribute("aria-selected", String(selected));
+    tab.tabIndex = selected ? 0 : -1;
+    if (selected && focus) tab.focus();
+  });
+  motionPanels.forEach((panel) => {
+    panel.hidden = panel.dataset.motionPanel !== category;
+  });
+}
+
 function resetMotionPose() {
   motionMixer?.stopAllAction();
   activeMotionAction = null;
@@ -315,7 +359,7 @@ loader.load(
     Promise.all(Object.keys(motions).map((id) => loadMotion(id)))
       .then(() => {
         setMotionButtonsEnabled(true);
-        motionStatus.textContent = "04 MOTIONS READY · SELECT A PROTOCOL";
+        motionStatus.textContent = "10 MOTIONS READY · SELECT A PROTOCOL";
         motionStatus.dataset.state = "ready";
       })
       .catch((error) => {
@@ -372,6 +416,22 @@ animate();
 
 motionButtons.forEach((button) => {
   button.addEventListener("click", () => playMotion(button.dataset.motion));
+});
+
+motionTabs.forEach((tab, index) => {
+  tab.addEventListener("click", () => selectMotionCategory(tab.dataset.motionFilter));
+  tab.addEventListener("keydown", (event) => {
+    const keys = ["ArrowLeft", "ArrowRight", "Home", "End"];
+    if (!keys.includes(event.key)) return;
+    event.preventDefault();
+
+    let nextIndex = index;
+    if (event.key === "ArrowLeft") nextIndex = (index - 1 + motionTabs.length) % motionTabs.length;
+    if (event.key === "ArrowRight") nextIndex = (index + 1) % motionTabs.length;
+    if (event.key === "Home") nextIndex = 0;
+    if (event.key === "End") nextIndex = motionTabs.length - 1;
+    selectMotionCategory(motionTabs[nextIndex].dataset.motionFilter, { focus: true });
+  });
 });
 
 motionStopButton.addEventListener("click", () => stopMotion());

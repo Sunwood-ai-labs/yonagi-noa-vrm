@@ -18,7 +18,7 @@ The component source is included and adapted only as part of this website. It is
 - License: MIT License
 - Copyright: Copyright (c) 2026 Kiratchi
 
-The four `.vrma` assets in `public/motions/` were generated from the JSON specifications in `motions/specs/` using the upstream `tools/spec2vrma.mjs` workflow. No Text-To-VRMA application source is vendored into this repository.
+The ten `.vrma` assets in `public/motions/` were generated from the JSON specifications in `motions/specs/` using the upstream `tools/spec2vrma.mjs` workflow. No Text-To-VRMA application source is vendored into this repository.
 
 ## @pixiv/three-vrm-animation
 
