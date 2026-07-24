@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="AI人狼キャラクター・夜凪 ノアのVRMインタラクティブプレビュー"
+    />
+    <meta name="theme-color" content="#09101d" />
+    <title>夜凪 ノア — VRM Observatory</title>
+  </head>
+  <body>
+    <div id="app">
+      <header class="site-header">
+        <a class="wordmark" href="#" aria-label="夜凪ノア ホーム">
+          <span class="wordmark-mark" aria-hidden="true">☾</span>
+          <span>YONAGI NOA</span>
+        </a>
+        <div class="header-meta">
+          <span>VRM 1.0</span>
+          <span class="status-dot" aria-hidden="true"></span>
+          <span>AI WEREWOLF</span>
+        </div>
+      </header>
+
+      <main>
+        <section class="hero" aria-labelledby="character-name">
+          <div class="hero-copy">
+            <p class="eyebrow">CHARACTER ARCHIVE / 001</p>
+            <h1 id="character-name"><span>夜凪</span> ノア</h1>
+            <p class="reading">YONAGI NOA</p>
+            <p class="tagline">その微笑みは、<br />真実か。罠か。</p>
+            <div class="profile-line">
+              <span>ROLE</span>
+              <strong>静かな観察者</strong>
+            </div>
+          </div>
+
+          <div class="viewer-shell">
+            <div class="orbit orbit-one" aria-hidden="true"></div>
+            <div class="orbit orbit-two" aria-hidden="true"></div>
+            <canvas id="vrm-canvas" aria-label="夜凪ノアの3Dモデル"></canvas>
+
+            <div id="loading" class="loading-panel" role="status" aria-live="polite">
+              <span class="loading-kicker">SUMMONING AVATAR</span>
+              <strong id="loading-value">0%</strong>
+              <span class="loading-track"><i id="loading-bar"></i></span>
+            </div>
+
+            <div id="error-panel" class="error-panel" hidden>
+              <strong>モデルを読み込めませんでした</strong>
+              <span>WebGL対応ブラウザで再読み込みしてください。</span>
+            </div>
+
+            <div class="viewer-hint">
+              <span>DRAG TO ORBIT</span>
+              <span>SCROLL TO ZOOM</span>
+            </div>
+          </div>
+
+          <aside class="character-notes" aria-label="キャラクター情報">
+            <div class="note-index">01</div>
+            <dl>
+              <div><dt>EYES</dt><dd>Emerald</dd></div>
+              <div><dt>COLORS</dt><dd>Midnight / Gold</dd></div>
+              <div><dt>MOTIF</dt><dd>Moonlit Fox</dd></div>
+              <div><dt>CLASS</dt><dd>Observer</dd></div>
+            </dl>
+            <p>
+              月明かりのように静かで、相手の言葉を一つも取りこぼさない。
+              信頼を集める微笑みの奥に、最後まで読めない思考を隠している。
+            </p>
+          </aside>
+        </section>
+
+        <section class="control-deck" aria-label="3D表示コントロール">
+          <div class="control-title">
+            <span>OBSERVATORY CONTROL</span>
+            <strong id="model-status">MODEL LOADING</strong>
+          </div>
+          <div class="controls">
+            <button id="rotate-button" class="control" type="button" aria-pressed="false">
+              <span class="control-icon" aria-hidden="true">↻</span>
+              AUTO ORBIT
+            </button>
+            <button id="light-button" class="control" type="button" aria-pressed="false">
+              <span class="control-icon" aria-hidden="true">◐</span>
+              MOON LIGHT
+            </button>
+            <button id="reset-button" class="control" type="button">
+              <span class="control-icon" aria-hidden="true">◎</span>
+              RESET VIEW
+            </button>
+            <button id="fullscreen-button" class="control" type="button">
+              <span class="control-icon" aria-hidden="true">⛶</span>
+              FULL SCREEN
+            </button>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        <span>© 2026 YONAGI NOA ARCHIVE</span>
+        <span>MODEL DATA: VRM 1.0</span>
+        <a href="https://github.com/Sunwood-ai-labs/yonagi-noa-vrm">VIEW SOURCE ↗</a>
+      </footer>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
