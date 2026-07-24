@@ -4,6 +4,7 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { VRMLoaderPlugin } from "@pixiv/three-vrm";
 import {
   VRMAnimationLoaderPlugin,
+  VRMLookAtQuaternionProxy,
   createVRMAnimationClip,
 } from "@pixiv/three-vrm-animation";
 import { createLiquid } from "./canvasui/LiquidVanilla.ts";
@@ -171,7 +172,8 @@ loader.register((parser) => new VRMLoaderPlugin(parser));
 const motionLoader = new GLTFLoader();
 motionLoader.register((parser) => new VRMAnimationLoaderPlugin(parser));
 const motionCache = new Map();
-const motionClock = new THREE.Clock();
+const motionTimer = new THREE.Timer();
+motionTimer.connect(document);
 let motionMixer = null;
 let activeMotionAction = null;
 let activeMotionId = null;
@@ -286,6 +288,11 @@ loader.load(
 
     setRelaxedPose(currentVrm);
     currentVrm.update(0);
+    if (currentVrm.lookAt) {
+      const lookAtProxy = new VRMLookAtQuaternionProxy(currentVrm.lookAt);
+      lookAtProxy.name = "VRMLookAtQuaternionProxy";
+      currentVrm.scene.add(lookAtProxy);
+    }
     currentVrm.scene.rotation.y = displayRotation;
     scene.add(currentVrm.scene);
     frameModel(currentVrm.scene);
@@ -347,8 +354,9 @@ const resizeObserver = new ResizeObserver(resize);
 resizeObserver.observe(viewerShell);
 resize();
 
-function animate() {
-  const delta = motionClock.getDelta();
+function animate(timestamp) {
+  motionTimer.update(timestamp);
+  const delta = motionTimer.getDelta();
   controls.update();
 
   if (motionMixer && activeMotionAction && currentVrm) {
@@ -416,4 +424,11 @@ fullscreenButton.addEventListener("click", async () => {
 });
 
 document.addEventListener("fullscreenchange", resize);
-window.addEventListener("pagehide", () => liquid?.destroy(), { once: true });
+window.addEventListener(
+  "pagehide",
+  () => {
+    motionTimer.dispose();
+    liquid?.destroy();
+  },
+  { once: true },
+);
