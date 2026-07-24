@@ -58,9 +58,7 @@ scene.add(rimLight);
 const ambient = new THREE.HemisphereLight(0xd7e8ff, 0x172033, 1.7);
 scene.add(ambient);
 
-const clock = new THREE.Clock();
 let currentVrm = null;
-let elapsed = 0;
 let moonMode = false;
 const displayRotation = 0.48;
 const homePosition = new THREE.Vector3(0.08, 1.25, 4.2);
@@ -120,6 +118,7 @@ loader.load(
     });
 
     setRelaxedPose(currentVrm);
+    currentVrm.update(0);
     currentVrm.scene.rotation.y = displayRotation;
     scene.add(currentVrm.scene);
     frameModel(currentVrm.scene);
@@ -156,18 +155,7 @@ resizeObserver.observe(viewerShell);
 resize();
 
 function animate() {
-  const delta = Math.min(clock.getDelta(), 0.05);
-  elapsed += delta;
   controls.update();
-
-  if (currentVrm) {
-    const blink = Math.max(0, Math.sin(elapsed * 0.72) - 0.985) * 66;
-    currentVrm.expressionManager?.setValue("blink", Math.min(1, blink));
-
-    const chest = currentVrm.humanoid?.getNormalizedBoneNode("chest");
-    if (chest) chest.rotation.z = Math.sin(elapsed * 0.85) * 0.008;
-    currentVrm.update(delta);
-  }
 
   renderer.render(scene, camera);
   requestAnimationFrame(animate);
