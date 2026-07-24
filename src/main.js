@@ -2,6 +2,10 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { VRMLoaderPlugin } from "@pixiv/three-vrm";
+import {
+  VRMAnimationLoaderPlugin,
+  createVRMAnimationClip,
+} from "@pixiv/three-vrm-animation";
 import { createLiquid } from "./canvasui/LiquidVanilla.ts";
 import "./style.css";
 
@@ -21,6 +25,32 @@ const rotateButton = document.querySelector("#rotate-button");
 const lightButton = document.querySelector("#light-button");
 const resetButton = document.querySelector("#reset-button");
 const fullscreenButton = document.querySelector("#fullscreen-button");
+const motionButtons = [...document.querySelectorAll(".motion-trigger")];
+const motionStatus = document.querySelector("#motion-status");
+const motionStopButton = document.querySelector("#motion-stop");
+
+const motions = {
+  observe: {
+    label: "観察 / OBSERVE",
+    url: "./motions/01-observe.vrma",
+    loop: true,
+  },
+  accuse: {
+    label: "告発 / ACCUSE",
+    url: "./motions/02-accuse.vrma",
+    loop: false,
+  },
+  deny: {
+    label: "弁明 / DENY",
+    url: "./motions/03-deny.vrma",
+    loop: false,
+  },
+  victory: {
+    label: "勝利 / VICTORY",
+    url: "./motions/04-victory.vrma",
+    loop: false,
+  },
+};
 
 const liquid = createLiquid(
   {
@@ -138,6 +168,109 @@ function setLoading(progress) {
 
 const loader = new GLTFLoader();
 loader.register((parser) => new VRMLoaderPlugin(parser));
+const motionLoader = new GLTFLoader();
+motionLoader.register((parser) => new VRMAnimationLoaderPlugin(parser));
+const motionCache = new Map();
+const motionClock = new THREE.Clock();
+let motionMixer = null;
+let activeMotionAction = null;
+let activeMotionId = null;
+let motionRequestId = 0;
+
+async function loadMotion(id) {
+  if (motionCache.has(id)) return motionCache.get(id);
+
+  const motion = motions[id];
+  if (!motion) throw new Error(`Unknown motion: ${id}`);
+
+  const gltf = await motionLoader.loadAsync(motion.url);
+  const vrmAnimation = gltf.userData.vrmAnimations?.[0];
+  if (!vrmAnimation) throw new Error(`VRMA data was not found: ${motion.url}`);
+  motionCache.set(id, vrmAnimation);
+  return vrmAnimation;
+}
+
+function setMotionButtonsEnabled(enabled) {
+  motionButtons.forEach((button) => {
+    button.disabled = !enabled;
+  });
+}
+
+function resetMotionPose() {
+  motionMixer?.stopAllAction();
+  activeMotionAction = null;
+  if (!currentVrm) return;
+
+  currentVrm.humanoid?.resetNormalizedPose();
+  currentVrm.expressionManager?.resetValues();
+  setRelaxedPose(currentVrm);
+  currentVrm.update(0);
+}
+
+function updateMotionSelection(id, playing) {
+  motionButtons.forEach((button) => {
+    const selected = button.dataset.motion === id && playing;
+    button.classList.toggle("active", selected);
+    button.setAttribute("aria-pressed", String(selected));
+  });
+}
+
+function stopMotion({ announce = true } = {}) {
+  motionRequestId += 1;
+  resetMotionPose();
+  activeMotionId = null;
+  updateMotionSelection(null, false);
+  motionStopButton.disabled = true;
+
+  if (announce) {
+    motionStatus.textContent = "MOTION HALTED · SELECT A PROTOCOL";
+    motionStatus.dataset.state = "ready";
+  }
+}
+
+async function playMotion(id) {
+  if (!currentVrm || !motions[id]) return;
+
+  const requestId = ++motionRequestId;
+  const motion = motions[id];
+  motionStatus.textContent = `${motion.label} · LOADING`;
+  motionStatus.dataset.state = "loading";
+  setMotionButtonsEnabled(false);
+
+  try {
+    const vrmAnimation = await loadMotion(id);
+    if (requestId !== motionRequestId || !currentVrm) return;
+
+    resetMotionPose();
+    const clip = createVRMAnimationClip(vrmAnimation, currentVrm);
+    motionMixer ??= new THREE.AnimationMixer(currentVrm.scene);
+
+    const action = motionMixer.clipAction(clip);
+    action.reset();
+    action.setLoop(motion.loop ? THREE.LoopRepeat : THREE.LoopOnce, motion.loop ? Infinity : 1);
+    action.clampWhenFinished = !motion.loop;
+    action.play();
+
+    activeMotionAction = action;
+    activeMotionId = id;
+    updateMotionSelection(id, true);
+    motionStopButton.disabled = false;
+    motionStatus.textContent = `${motion.label} · ${motion.loop ? "LOOPING" : "PLAYING"}`;
+    motionStatus.dataset.state = "playing";
+    liquid?.splat(0.44, 0.56, motion.loop ? 14 : 22, motion.loop ? -8 : 7);
+  } catch (error) {
+    console.error("Failed to play VRMA motion:", error);
+    resetMotionPose();
+    activeMotionId = null;
+    updateMotionSelection(null, false);
+    motionStopButton.disabled = true;
+    motionStatus.textContent = "MOTION SIGNAL ERROR";
+    motionStatus.dataset.state = "error";
+  } finally {
+    if (requestId === motionRequestId) setMotionButtonsEnabled(true);
+  }
+}
+
 loader.load(
   "./models/yonagi-noa.vrm",
   (gltf) => {
@@ -162,6 +295,28 @@ loader.load(
     modelStatus.textContent = "MODEL ONLINE";
     headerStatus.textContent = "SYNCHRONIZED";
     liquid?.splat(0.54, 0.52, 22, 4);
+    motionMixer = new THREE.AnimationMixer(currentVrm.scene);
+    motionMixer.addEventListener("finished", ({ action }) => {
+      if (action !== activeMotionAction || !activeMotionId) return;
+      const completedMotion = motions[activeMotionId];
+      activeMotionAction = null;
+      updateMotionSelection(activeMotionId, false);
+      motionStatus.textContent = `${completedMotion.label} · COMPLETE / REPLAY READY`;
+      motionStatus.dataset.state = "complete";
+    });
+
+    Promise.all(Object.keys(motions).map((id) => loadMotion(id)))
+      .then(() => {
+        setMotionButtonsEnabled(true);
+        motionStatus.textContent = "04 MOTIONS READY · SELECT A PROTOCOL";
+        motionStatus.dataset.state = "ready";
+      })
+      .catch((error) => {
+        console.error("Failed to preload VRMA motions:", error);
+        setMotionButtonsEnabled(true);
+        motionStatus.textContent = "MOTION PRELOAD PARTIAL · RETRY ON SELECT";
+        motionStatus.dataset.state = "error";
+      });
     window.setTimeout(() => {
       loadingPanel.hidden = true;
     }, 360);
@@ -175,6 +330,7 @@ loader.load(
     errorPanel.hidden = false;
     modelStatus.textContent = "MODEL ERROR";
     headerStatus.textContent = "SIGNAL LOST";
+    motionStatus.textContent = "MOTION LINK UNAVAILABLE";
   },
 );
 
@@ -192,12 +348,29 @@ resizeObserver.observe(viewerShell);
 resize();
 
 function animate() {
+  const delta = motionClock.getDelta();
   controls.update();
+
+  if (motionMixer && activeMotionAction && currentVrm) {
+    motionMixer.update(delta);
+    currentVrm.humanoid?.update();
+    currentVrm.expressionManager?.update();
+  }
 
   renderer.render(scene, camera);
   requestAnimationFrame(animate);
 }
 animate();
+
+motionButtons.forEach((button) => {
+  button.addEventListener("click", () => playMotion(button.dataset.motion));
+});
+
+motionStopButton.addEventListener("click", () => stopMotion());
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && activeMotionId) stopMotion();
+});
 
 rotateButton.addEventListener("click", () => {
   controls.autoRotate = !controls.autoRotate;
@@ -221,10 +394,13 @@ lightButton.addEventListener("click", () => {
 });
 
 resetButton.addEventListener("click", () => {
+  stopMotion({ announce: false });
   camera.position.copy(homePosition);
   controls.target.copy(homeTarget);
   if (currentVrm) currentVrm.scene.rotation.y = displayRotation;
   controls.update();
+  motionStatus.textContent = "VIEW + MOTION RESET · READY";
+  motionStatus.dataset.state = "ready";
 });
 
 fullscreenButton.addEventListener("click", async () => {

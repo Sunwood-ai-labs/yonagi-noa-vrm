@@ -9,3 +9,21 @@
 - License: MIT License with Commons Clause
 
 The component source is included and adapted only as part of this website. It is not offered for sale or redistribution as a standalone component library. See the Canvas UI website and registry metadata for the complete current terms.
+
+## Text-To-VRMA
+
+- Project: [Kirakun0328/text-to-vrma](https://github.com/Kirakun0328/text-to-vrma)
+- Version used for motion generation: v1.1.4
+- Source commit: `bb10d82a9048b7d82d87869ed6f760b344f05959`
+- License: MIT License
+- Copyright: Copyright (c) 2026 Kiratchi
+
+The four `.vrma` assets in `public/motions/` were generated from the JSON specifications in `motions/specs/` using the upstream `tools/spec2vrma.mjs` workflow. No Text-To-VRMA application source is vendored into this repository.
+
+## @pixiv/three-vrm-animation
+
+- Project: [pixiv/three-vrm](https://github.com/pixiv/three-vrm)
+- Package: `@pixiv/three-vrm-animation` 3.5.5
+- License: MIT License
+
+This package loads and retargets the generated VRM Animation 1.0 files onto the Yonagi Noa VRM model in the browser.
