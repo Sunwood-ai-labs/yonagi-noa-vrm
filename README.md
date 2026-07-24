@@ -26,6 +26,19 @@ Text-To-VRMA v1.1.4で生成したAI人狼向けの10モーションを、GAME /
 [10モーション一括ダウンロード](public/motions/yonagi-noa-motion-pack.zip)
 ／ [待機・トーク6モーション](public/motions/yonagi-noa-idle-talk-pack.zip)
 
+## Motion visual QA
+
+モーションはVRMA形式検証と再生確認だけで完了にせず、各モーションを
+25%・50%・75%の時点と正面・斜めから撮影し、手首・前腕・胴体への貫通や
+不自然な手の重なりがないことを確認しています。
+
+![6モーションの手位置監査](artifacts/hand-audit-after/overview.jpg)
+
+- [修正前との比較](artifacts/hand-audit-before/overview.jpg)
+- [斜め角度からの貫通確認](artifacts/hand-audit-after/angle-overview.jpg)
+- [待機3本の時系列監査](artifacts/hand-audit-after/idle-timeline.jpg)
+- [トーク3本の時系列監査](artifacts/hand-audit-after/talk-timeline.jpg)
+
 ## Local development
 
 ```bash

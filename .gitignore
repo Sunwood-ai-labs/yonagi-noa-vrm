@@ -3,3 +3,8 @@ dist/
 .DS_Store
 *.log
 artifacts/preview-live-pages.png
+artifacts/hand-audit-before/*-front.jpg
+artifacts/hand-audit-before/*-angle.jpg
+artifacts/hand-audit-after/*-front.jpg
+artifacts/hand-audit-after/*-angle.jpg
+artifacts/hand-audit-after/timeline/
