@@ -7,6 +7,15 @@ not sufficient evidence that a generated motion is visually correct.
 
 Before publishing any new or changed motion:
 
+- Record the generation provenance explicitly. Distinguish ARDY/motion-model
+  output, LLM-authored keyframes, and manually authored JSON keyframes. Running
+  `spec2vrma.mjs` only converts a supplied spec to VRMA; it is not proof of AI
+  motion generation. Never label a motion "AI-generated" unless the actual
+  model/engine invocation and its output for that motion are preserved.
+- For a motion presented as full-body, require intentional lower-body tracks
+  and visible weight transfer. Arm, torso, head, and hips-offset tracks alone
+  are an upper-body keyframe prototype and must not be reported as a generated
+  full-body motion, even if its static silhouette differs from neutral.
 - Capture every motion at 25%, 50%, and 75% of its duration from the normal
   viewer angle.
 - Capture the highest-risk hand pose from both the normal and an oblique angle.
