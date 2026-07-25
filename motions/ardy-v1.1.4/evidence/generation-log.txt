@@ -1,0 +1,35 @@
+Text-To-VRMA v1.1.4 / ARDY generation receipt
+Generated: 2026-07-25 JST
+Host: MADESK
+Physical GPU: 1, NVIDIA GeForce RTX 4090, PCI 00000000:05:00.0
+CUDA_DEVICE_ORDER=PCI_BUS_ID
+CUDA_VISIBLE_DEVICES=1
+
+HEALTH status=ok model=ARDY-Core-RP-20FPS-Horizon40 device=cuda:0 fps=20 translator=disabled
+
+05-idle-breathe
+timing: generate=10.2s finalize=0.3s (128f, 10 steps)
+response duration=6.35s total=10.9s
+
+06-idle-listen
+timing: generate=10.0s finalize=0.0s (144f, 10 steps)
+response duration=7.15s total=10.5s
+
+07-idle-suspicion
+timing: generate=10.2s finalize=0.0s (136f, 10 steps)
+response duration=6.75s total=10.7s
+
+08-talk-calm
+timing: generate=8.9s finalize=0.0s (112f, 10 steps)
+response duration=5.55s total=9.3s
+
+09-talk-whisper
+timing: generate=10.0s finalize=0.0s (96f, 10 steps)
+response duration=4.75s total=10.4s
+
+10-talk-press
+timing: generate=9.2s finalize=0.0s (104f, 10 steps)
+response duration=5.15s total=9.6s
+
+The exact request JSON files are in ../requests/.
+The exact raw ARDY response specs are in ../../specs/.

@@ -1,0 +1,8 @@
+{
+  "text": "A suspicious detective stands in place, leans back slightly, shifts weight onto one leg, folds one arm across her torso while the other hand gestures thoughtfully, looks side to side, then returns.",
+  "duration": 6.8,
+  "seed": 250503,
+  "armSpread": 6,
+  "postprocess": true,
+  "cfg": 3
+}

@@ -12,6 +12,13 @@ Before publishing any new or changed motion:
   `spec2vrma.mjs` only converts a supplied spec to VRMA; it is not proof of AI
   motion generation. Never label a motion "AI-generated" unless the actual
   model/engine invocation and its output for that motion are preserved.
+- When a remote multi-GPU host is used, preserve the `nvidia-smi` physical
+  index/PCI-bus map, the CUDA ordering variables, a health response, the exact
+  request JSON, and the raw returned spec. A model merely loading on `cuda:0`
+  is not proof that the intended physical GPU was selected.
+- Never mark raw ARDY sequences as seamless loops unless their first and last
+  hips positions and rotations were explicitly made continuous and visually
+  checked. Prefer one-shot playback over a visible end-to-start snap.
 - For a motion presented as full-body, require intentional lower-body tracks
   and visible weight transfer. Arm, torso, head, and hips-offset tracks alone
   are an upper-body keyframe prototype and must not be reported as a generated

@@ -1,0 +1,14 @@
+﻿{
+    "generatedAt":  "2026-07-25T11:03:13.7748340+09:00",
+    "host":  "MADESK",
+    "user":  "vega",
+    "textToVrma":  "v1.1.4",
+    "ardyCommit":  "693f74d13b3d04a0a22ce127ee79c929dd89756b",
+    "engine":  "ARDY-Core-RP-20FPS-Horizon40",
+    "endpoint":  "http://127.0.0.1:2337/generate",
+    "cudaDeviceOrder":  "PCI_BUS_ID",
+    "cudaVisibleDevices":  "1",
+    "selectedPhysicalGpu":  "1",
+    "selectedGpu":  "NVIDIA GeForce RTX 4090",
+    "textEncoderDevice":  "cpu"
+}

@@ -48,6 +48,22 @@ for (const [specPath, vrmaPath] of motionFiles) {
   assert(animation?.name === spec.name, `${vrmaPath}: animation name mismatch`);
   assert(animation.channels.length > 0, `${vrmaPath}: animation has no channels`);
   assert(Math.abs(duration - spec.duration) < 0.001, `${vrmaPath}: duration mismatch`);
+  if (/motions\/specs\/(?:0[5-9]|10)-/.test(specPath)) {
+    const requiredFullBodyTracks = [
+      "hips",
+      "leftUpperLeg",
+      "leftLowerLeg",
+      "leftFoot",
+      "rightUpperLeg",
+      "rightLowerLeg",
+      "rightFoot",
+    ];
+    for (const bone of requiredFullBodyTracks) {
+      assert(spec.tracks?.[bone]?.length >= 90, `${specPath}: missing dense ARDY full-body track ${bone}`);
+    }
+    assert(spec.hips?.length >= 90, `${specPath}: missing dense ARDY hips position track`);
+    assert(spec.loop === false, `${specPath}: raw ARDY sequence must not be mislabeled as seamless loop`);
+  }
   if (spec.loop) {
     for (const [bone, keys] of Object.entries(spec.tracks ?? {})) {
       assert(keys[0].t === 0, `${specPath}: ${bone} loop must begin at 0`);

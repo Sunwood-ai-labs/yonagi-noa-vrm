@@ -56,32 +56,32 @@ const motions = {
   "idle-breathe": {
     label: "静かな呼吸 / BREATHE",
     url: "./motions/05-idle-breathe.vrma",
-    loop: true,
+    loop: false,
   },
   "idle-listen": {
     label: "気配を聴く / LISTEN",
     url: "./motions/06-idle-listen.vrma",
-    loop: true,
+    loop: false,
   },
   "idle-suspicion": {
     label: "疑念を読む / SUSPICION",
     url: "./motions/07-idle-suspicion.vrma",
-    loop: true,
+    loop: false,
   },
   "talk-calm": {
     label: "冷静な説明 / CALM",
     url: "./motions/08-talk-calm.vrma",
-    loop: true,
+    loop: false,
   },
   "talk-whisper": {
     label: "秘密の囁き / WHISPER",
     url: "./motions/09-talk-whisper.vrma",
-    loop: true,
+    loop: false,
   },
   "talk-press": {
     label: "核心を追及 / PRESS",
     url: "./motions/10-talk-press.vrma",
-    loop: true,
+    loop: false,
   },
 };
 
