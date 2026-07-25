@@ -8,3 +8,5 @@ artifacts/hand-audit-before/*-angle.jpg
 artifacts/hand-audit-after/*-front.jpg
 artifacts/hand-audit-after/*-angle.jpg
 artifacts/hand-audit-after/timeline/
+artifacts/pose-reference/
+artifacts/silhouette-audit/raw/

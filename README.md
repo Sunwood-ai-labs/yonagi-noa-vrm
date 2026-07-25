@@ -29,15 +29,17 @@ Text-To-VRMA v1.1.4で生成したAI人狼向けの10モーションを、GAME /
 ## Motion visual QA
 
 モーションはVRMA形式検証と再生確認だけで完了にせず、各モーションを
-25%・50%・75%の時点と正面・斜めから撮影し、手首・前腕・胴体への貫通や
-不自然な手の重なりがないことを確認しています。
+25%・50%・75%の時点と正面・斜めから撮影しています。手首・前腕・胴体への
+貫通や不自然な手の重なりに加え、ニュートラルのAポーズから腕・肘・手首が
+明確に離れ、静止画でも6モーションを判別できることを確認しています。
 
-![6モーションの手位置監査](artifacts/hand-audit-after/overview.jpg)
+![ニュートラルと6モーションのシルエット比較](artifacts/silhouette-audit/neutral-vs-six.jpg)
 
-- [修正前との比較](artifacts/hand-audit-before/overview.jpg)
+- [6モーションの正面比較](artifacts/hand-audit-after/overview.jpg)
 - [斜め角度からの貫通確認](artifacts/hand-audit-after/angle-overview.jpg)
 - [待機3本の時系列監査](artifacts/hand-audit-after/idle-timeline.jpg)
 - [トーク3本の時系列監査](artifacts/hand-audit-after/talk-timeline.jpg)
+- [修正前との比較](artifacts/hand-audit-before/overview.jpg)
 
 ## Local development
 
