@@ -411,10 +411,9 @@ a { color: inherit; }
   .console-heading { grid-row: auto; border-right: 0; border-bottom: 1px solid var(--line); }
   .motion-selector { grid-template-columns: repeat(3, 1fr); }
   .motion-selector button:nth-child(3) { border-right: 0; }
-  .viewer-comparison { grid-template-columns: 1fr; gap: 14px; }
-  .comparison-spine { flex-direction: row; min-height: 44px; }
-  .comparison-spine span { writing-mode: horizontal-tb; }
-  .comparison-spine i { width: 46px; height: 1px; }
+  .viewer-comparison {
+    grid-template-columns: minmax(0, 1fr) 34px minmax(0, 1fr);
+  }
   .canvas-frame { height: min(94vw, 720px); }
   .method-strip { grid-template-columns: repeat(2, 1fr); }
   .method-strip div:nth-child(2) { border-right: 0; }
@@ -434,8 +433,60 @@ a { color: inherit; }
   .transport { grid-template-columns: 1fr 1fr; }
   .timeline { grid-column: 1 / -1; padding: 14px 18px 3px; }
   #timecode { grid-column: 1 / -1; padding: 4px 18px 14px; text-align: right; }
-  .canvas-frame { height: 132vw; max-height: 660px; }
-  .compare-panel > footer { flex-wrap: wrap; }
+  .viewer-comparison {
+    grid-template-columns: minmax(0, 1fr) 18px minmax(0, 1fr);
+    gap: 0;
+  }
+  .compare-panel > header {
+    min-height: 104px;
+    padding: 9px 7px;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 7px;
+  }
+  .compare-panel > header span {
+    font-size: .34rem;
+    line-height: 1.45;
+  }
+  .compare-panel > header h2 {
+    margin-top: 4px;
+    font-size: .84rem;
+  }
+  .compare-panel > header > strong {
+    padding: 5px 6px;
+    font-size: .34rem;
+  }
+  .canvas-frame {
+    height: 124vw;
+    max-height: 520px;
+  }
+  .canvas-frame::before { inset: 8px; }
+  .panel-axis { display: none; }
+  .compare-panel > footer {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-content: center;
+    gap: 6px 4px;
+    min-height: 92px;
+    padding: 8px 7px;
+    font-size: .35rem;
+  }
+  .compare-panel > footer strong {
+    margin: 0;
+    font-size: .44rem;
+    text-align: right;
+  }
+  .comparison-spine {
+    gap: 7px;
+    overflow: visible;
+  }
+  .comparison-spine span { font-size: .3rem; }
+  .comparison-spine i { height: 30px; }
+  .comparison-spine b {
+    width: 22px;
+    height: 22px;
+    font-size: .38rem;
+  }
   .method-strip { grid-template-columns: 1fr; }
   .method-strip div { border-right: 0; border-bottom: 1px solid var(--line); }
   .method-strip div:last-child { border-bottom: 0; }

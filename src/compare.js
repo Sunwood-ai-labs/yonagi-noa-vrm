@@ -192,7 +192,6 @@ function createViewer(canvas, loadingPanel) {
     const clip = createVRMAnimationClip(vrmAnimation, vrm);
     action = mixer.clipAction(clip);
     action.reset().play();
-    action.paused = true;
     mixer.setTime(0);
     vrm.update(0);
   }
@@ -209,7 +208,7 @@ function createViewer(canvas, loadingPanel) {
     const width = frame.clientWidth;
     const height = frame.clientHeight;
     renderer.setSize(width, height, false);
-    camera.fov = width <= 620 ? 34 : 28;
+    camera.fov = width <= 220 ? 42 : width <= 620 ? 34 : 28;
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
   }
