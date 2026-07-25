@@ -10,6 +10,10 @@ AI人狼キャラクター「夜凪 ノア」のVRMモデルと、WebGLによる
 
 「生きている尋問データベース」をコンセプトに、Canvas UIの流体エフェクトとVRMビューワーを融合しました。マウス・タッチでモデルを回転し、スクロールまたはピンチでズームできます。自動回転、月光ライティング、視点リセット、フルスクリーン表示に対応しています。
 
+**[衝突補正 BEFORE / AFTER 比較ページ](https://sunwood-ai-labs.github.io/yonagi-noa-vrm/compare.html)**では、RTX 4090で生成したARDY生モーションと補正版を、同じモデル・時刻・カメラで左右に同期表示できます。6モーション切替、同時再生、一時停止、任意フレームのスクラブ、両ビューのカメラ同期に対応しています。
+
+![ARDY生モーションと衝突補正版の同期比較](artifacts/compare-page/desktop-viewport-v2.png)
+
 AI人狼向けの10モーションを、GAME / IDLE / TALKの3カテゴリから選択・再生できます。待機・トークの6本（05〜10）は、リモートRTX 4090上のText-To-VRMA v1.1.4からARDY-Core-RP-20FPS-Horizon40を実行して生成しました。各出力は20本の全身ボーントラックとhips位置トラックを持ちます。ARDY生JSONは不変の証跡として保存し、夜凪ノアの実VRM骨格に合わせた機械的な衝突補正を適用してから、同梱したText-To-VRMA v1.1.4のVRMA builderでVRMA 1.0へ変換しています。プロンプト・seed・生成設定・GPU証跡・生JSONは[`motions/ardy-v1.1.4`](motions/ardy-v1.1.4)に保存しています。
 
 - 観察 / OBSERVE — 相手の反応を静かに読むループモーション
@@ -64,10 +68,12 @@ npm run build
 
 - `public/models/yonagi-noa.vrm` — VRM 1.0 model
 - `public/motions/*.vrma` — ten VRM Animation 1.0 motion files
+- `public/motions/raw-ardy/*.vrma` — comparison-only VRMA files built from unmodified ARDY responses
 - `motions/ardy-v1.1.4/raw-specs/*.json` — unmodified ARDY responses
 - `motions/specs/*.json` — collision-corrected motion specs used for the published VRMA files
 - `scripts/motion-collision.mjs` — 40fps collision audit and mechanical correction
 - `scripts/build-vrma.mjs` — deterministic VRMA rebuild
+- `compare.html` / `src/compare.js` — synchronized before/after comparison page
 - `src/main.js` — Three.js / three-vrm viewer
 - `src/canvasui/LiquidVanilla.ts` — Canvas UI Liquid fluid engine
 - `src/style.css` — character archive visual design

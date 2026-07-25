@@ -22,3 +22,9 @@ faaa9c6c71f2e31b160be15cf2c81e3455e927572a08683b9a6b7da8adfc01be  public/motions
 29e37e3cabcc378aa711d898325e43559380b8968bf35fd6980ecdbd25de51a3  public/motions/08-talk-calm.vrma
 1aec6433aa462a74a6dca39149f42d204a3ec5d44c91459cf5d4995d3963b308  public/motions/09-talk-whisper.vrma
 e2796501f1590060c4e595efb75744532f266edba8b9047f2cd17bd01c00af14  public/motions/10-talk-press.vrma
+a148ba1bb3841857d4a684d3b48361eab4fcbcc24cd7e83e1d88319f002df55b  public/motions/raw-ardy/05-idle-breathe.vrma
+f8f8349091e9755899532030e90fb7a271a13b5e56e4a89e2d09432ae502884c  public/motions/raw-ardy/06-idle-listen.vrma
+61a4604ba2f3b1f00d191f95c8df9099b18cd574b931ba4f46209613a4d839db  public/motions/raw-ardy/07-idle-suspicion.vrma
+73a2c71943d1a4328b9c30c16b1b431ee7633823598df4ccc7ed9e85cf9e10f3  public/motions/raw-ardy/08-talk-calm.vrma
+5ac43439dca25df9a5325b25fb9b4e87d461516bd795ac7c3ab9d32c96fd43c2  public/motions/raw-ardy/09-talk-whisper.vrma
+94f5027b47353e3087592235b37a8e49dbdc9474a9f0abd1ec641270a6e17774  public/motions/raw-ardy/10-talk-press.vrma

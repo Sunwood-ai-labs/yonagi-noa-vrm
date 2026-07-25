@@ -12,6 +12,12 @@ const motionFiles = [
   ["motions/specs/08-talk-calm.json", "public/motions/08-talk-calm.vrma"],
   ["motions/specs/09-talk-whisper.json", "public/motions/09-talk-whisper.vrma"],
   ["motions/specs/10-talk-press.json", "public/motions/10-talk-press.vrma"],
+  ["motions/ardy-v1.1.4/raw-specs/05-idle-breathe.json", "public/motions/raw-ardy/05-idle-breathe.vrma"],
+  ["motions/ardy-v1.1.4/raw-specs/06-idle-listen.json", "public/motions/raw-ardy/06-idle-listen.vrma"],
+  ["motions/ardy-v1.1.4/raw-specs/07-idle-suspicion.json", "public/motions/raw-ardy/07-idle-suspicion.vrma"],
+  ["motions/ardy-v1.1.4/raw-specs/08-talk-calm.json", "public/motions/raw-ardy/08-talk-calm.vrma"],
+  ["motions/ardy-v1.1.4/raw-specs/09-talk-whisper.json", "public/motions/raw-ardy/09-talk-whisper.vrma"],
+  ["motions/ardy-v1.1.4/raw-specs/10-talk-press.json", "public/motions/raw-ardy/10-talk-press.vrma"],
 ];
 
 function assert(condition, message) {
@@ -48,7 +54,7 @@ for (const [specPath, vrmaPath] of motionFiles) {
   assert(animation?.name === spec.name, `${vrmaPath}: animation name mismatch`);
   assert(animation.channels.length > 0, `${vrmaPath}: animation has no channels`);
   assert(Math.abs(duration - spec.duration) < 0.001, `${vrmaPath}: duration mismatch`);
-  if (/motions\/specs\/(?:0[5-9]|10)-/.test(specPath)) {
+  if (/motions\/(?:specs|ardy-v1\.1\.4\/raw-specs)\/(?:0[5-9]|10)-/.test(specPath)) {
     const requiredFullBodyTracks = [
       "hips",
       "leftUpperLeg",

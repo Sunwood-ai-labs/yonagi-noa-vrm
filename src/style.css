@@ -715,7 +715,14 @@ h1 {
   letter-spacing: 0.14em;
 }
 
-.motion-pack {
+.motion-links {
+  display: grid;
+  gap: 5px;
+  flex: none;
+}
+
+.motion-pack,
+.motion-compare {
   flex: none;
   padding: 7px 8px;
   border: 1px solid rgba(255, 196, 87, 0.32);
@@ -726,8 +733,15 @@ h1 {
   transition: border-color 180ms ease, color 180ms ease, background 180ms ease;
 }
 
+.motion-compare {
+  border-color: rgba(104, 245, 178, 0.32);
+  color: var(--emerald);
+}
+
 .motion-pack:hover,
-.motion-pack:focus-visible {
+.motion-pack:focus-visible,
+.motion-compare:hover,
+.motion-compare:focus-visible {
   border-color: var(--amber);
   color: var(--paper);
   background: rgba(255, 196, 87, 0.1);

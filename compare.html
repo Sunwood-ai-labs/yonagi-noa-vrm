@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="夜凪ノアのARDY生成モーションを、衝突補正の適用前と適用後で同期比較するページ"
+    />
+    <meta name="theme-color" content="#05080a" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='27' fill='%23040708' stroke='%2368f5b2' stroke-width='2'/%3E%3Cpath d='M18 36 24 17l8 10 8-10 6 19-14 11Z' fill='none' stroke='%23ffc457' stroke-width='3' stroke-linejoin='round'/%3E%3C/svg%3E"
+    />
+    <title>夜凪 ノア — MOTION COLLISION LAB</title>
+  </head>
+  <body>
+    <header class="compare-header">
+      <a class="compare-identity" href="./">
+        <span class="compare-sigil" aria-hidden="true"></span>
+        <span>
+          <b>YONAGI / NOA</b>
+          <small>RETURN TO SIGNAL ARCHIVE</small>
+        </span>
+      </a>
+      <div class="lab-status">
+        <span aria-hidden="true"></span>
+        <b id="lab-status">LOADING DUAL SIGNAL</b>
+      </div>
+      <a
+        class="audit-link"
+        href="https://github.com/Sunwood-ai-labs/yonagi-noa-vrm/tree/main/artifacts/collision-audit"
+      >AUDIT LOG ↗</a>
+    </header>
+
+    <main class="compare-main">
+      <section class="compare-intro" aria-labelledby="compare-title">
+        <p>TEXT-TO-VRMA v1.1.4 / COLLISION CORRECTION PROOF</p>
+        <h1 id="compare-title">
+          <span>MOTION</span>
+          <strong>BEFORE <i>/</i> AFTER</strong>
+        </h1>
+        <div class="compare-intro-copy">
+          <b>同じモデル。同じ時刻。同じ視点。</b>
+          <p>
+            左はRTX 4090で生成したARDY生モーション、右は夜凪ノア専用の
+            40fps衝突監査を通した補正版です。
+          </p>
+        </div>
+      </section>
+
+      <section class="motion-console" aria-labelledby="motion-selector-title">
+        <div class="console-heading">
+          <span id="motion-selector-title">SELECT MOTION / 06</span>
+          <strong id="motion-name">09 秘密の囁き / WHISPER</strong>
+        </div>
+        <div class="motion-selector" role="group" aria-label="比較するモーション">
+          <button type="button" data-motion="idle-breathe"><span>05</span>BREATHE</button>
+          <button type="button" data-motion="idle-listen"><span>06</span>LISTEN</button>
+          <button type="button" data-motion="idle-suspicion"><span>07</span>SUSPICION</button>
+          <button type="button" data-motion="talk-calm"><span>08</span>CALM</button>
+          <button type="button" data-motion="talk-whisper"><span>09</span>WHISPER</button>
+          <button type="button" data-motion="talk-press"><span>10</span>PRESS</button>
+        </div>
+        <div class="transport">
+          <button id="play-toggle" class="play-toggle" type="button" disabled>
+            <span aria-hidden="true">▶</span>
+            <b>PLAY BOTH</b>
+          </button>
+          <button id="restart" class="restart" type="button" disabled>RESTART</button>
+          <label class="timeline">
+            <span class="sr-only">再生位置</span>
+            <input id="scrubber" type="range" min="0" max="4.75" value="0" step="0.001" disabled />
+          </label>
+          <output id="timecode" for="scrubber">00.000 / 04.750</output>
+        </div>
+      </section>
+
+      <section class="viewer-comparison" aria-label="補正前と補正後の同期比較">
+        <article class="compare-panel raw-panel">
+          <header>
+            <div>
+              <span>ARDY RAW / SOURCE OF TRUTH</span>
+              <h2>適用前</h2>
+            </div>
+            <strong id="raw-badge">RAW</strong>
+          </header>
+          <div class="canvas-frame">
+            <canvas id="raw-canvas" aria-label="衝突補正適用前の夜凪ノア"></canvas>
+            <div id="raw-loading" class="viewer-loading">
+              <span>RECONSTRUCTING RAW POSE</span>
+              <i></i>
+            </div>
+            <div class="panel-axis" aria-hidden="true">A / UNCORRECTED</div>
+          </div>
+          <footer>
+            <span>検出フレーム</span>
+            <strong id="raw-collisions">189 / 191</strong>
+            <span>最大侵入</span>
+            <strong id="raw-penetration">85.40 mm</strong>
+          </footer>
+        </article>
+
+        <div class="comparison-spine" aria-hidden="true">
+          <span>SAME CAMERA</span>
+          <i></i>
+          <b>VS</b>
+          <i></i>
+          <span>SAME TIME</span>
+        </div>
+
+        <article class="compare-panel fixed-panel">
+          <header>
+            <div>
+              <span>MODEL-FITTED CORRECTION</span>
+              <h2>適用後</h2>
+            </div>
+            <strong>40FPS PASS</strong>
+          </header>
+          <div class="canvas-frame">
+            <canvas id="fixed-canvas" aria-label="衝突補正適用後の夜凪ノア"></canvas>
+            <div id="fixed-loading" class="viewer-loading">
+              <span>RECONSTRUCTING FIXED POSE</span>
+              <i></i>
+            </div>
+            <div class="panel-axis" aria-hidden="true">B / CORRECTED</div>
+          </div>
+          <footer>
+            <span>検出フレーム</span>
+            <strong>0 / <i id="fixed-samples">191</i></strong>
+            <span>判定</span>
+            <strong class="pass">CLEAR</strong>
+          </footer>
+        </article>
+      </section>
+
+      <section class="method-strip" aria-label="比較条件">
+        <div><span>01</span><b>同期再生</b><p>両方のミキサーへ同じ時刻を直接適用</p></div>
+        <div><span>02</span><b>同期カメラ</b><p>どちらをドラッグしても反対側へ同じ視点を反映</p></div>
+        <div><span>03</span><b>生データ保持</b><p>左側は補正処理で上書きしていないARDY原本</p></div>
+        <div><span>04</span><b>近似の境界</b><p>骨格コライダー方式。厳密な布シミュレーションではありません</p></div>
+      </section>
+    </main>
+
+    <footer class="compare-footer">
+      <span>DRAG EITHER VIEW TO ORBIT BOTH</span>
+      <i></i>
+      <span>SCRUB TO INSPECT ANY FRAME</span>
+      <i></i>
+      <span>SPACE TO PLAY / PAUSE</span>
+    </footer>
+
+    <script type="module" src="/src/compare.js"></script>
+  </body>
+</html>
