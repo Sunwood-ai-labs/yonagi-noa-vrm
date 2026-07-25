@@ -13,8 +13,12 @@
 
 VRM Animation 1.0形式。
 05〜10の生成: Text-To-VRMA v1.1.4 / ARDY-Core-RP-20FPS-Horizon40
-RTX 4090上で生成し、ARDY生JSONからVRMAへ変換。
+RTX 4090上で生成。ARDY生JSONを保持し、夜凪ノア実骨格向けの
+40fps衝突監査・機械補正を通してVRMAへ変換。
 https://github.com/Kirakun0328/text-to-vrma
 
-モーションJSON原本:
+ARDY生JSON:
+https://github.com/Sunwood-ai-labs/yonagi-noa-vrm/tree/main/motions/ardy-v1.1.4/raw-specs
+
+補正済みモーションJSON:
 https://github.com/Sunwood-ai-labs/yonagi-noa-vrm/tree/main/motions/specs

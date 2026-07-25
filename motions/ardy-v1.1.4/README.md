@@ -16,11 +16,18 @@ engine included in Text-To-VRMA v1.1.4.
 - Generation: 10 denoising steps, CFG 3.0, arm spread 6 degrees,
   post-processing enabled, fixed per-motion seeds
 
-`requests/` contains the exact JSON submitted for each motion. The raw ARDY
-responses are the corresponding files under `../specs/`. `evidence/` preserves
-the GPU map and utilization snapshots for this run. The VRMA files were built
-from those raw responses with the `spec2vrma.mjs` shipped by Text-To-VRMA
-v1.1.4.
+`requests/` contains the exact JSON submitted for each motion.
+`raw-specs/` contains the unmodified ARDY responses and is never overwritten by
+collision correction. `evidence/` preserves the GPU map and utilization
+snapshots for this run.
+
+The published source specs under `../specs/` are derived from `raw-specs/` by
+`scripts/motion-collision.mjs`. The script audits interpolated poses at 40fps
+against conservative body/clothing colliders fitted to the actual Yonagi Noa
+VRM skeleton, then adjusts arm rotations with correction and temporal-change
+limits. The resulting VRMA files are built with the exact v1.1.4 builder
+vendored under `tools/text-to-vrma-v1.1.4/`. The numerical before/after evidence
+is under `artifacts/collision-audit/`.
 
 The ARDY responses are non-looping sequences. The preview therefore plays
 motions 05–10 once and clamps on the last frame instead of falsely repeating

@@ -7,8 +7,11 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
+    "fix:motion-collisions": "node scripts/motion-collision.mjs fix --out-dir motions/specs --report artifacts/collision-audit/fix-report.json motions/ardy-v1.1.4/raw-specs/*.json",
+    "build:motions": "node scripts/build-vrma.mjs",
     "check:motions": "node scripts/validate-motions.mjs",
-    "check": "npm run check:motions && npm run build"
+    "check:collisions": "node scripts/motion-collision.mjs check --reference-dir motions/ardy-v1.1.4/raw-specs --report artifacts/collision-audit/check-report.json",
+    "check": "npm run check:motions && npm run check:collisions && npm run build"
   },
   "dependencies": {
     "@pixiv/three-vrm": "3.5.5",

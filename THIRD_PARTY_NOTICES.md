@@ -18,7 +18,7 @@ The component source is included and adapted only as part of this website. It is
 - License: MIT License
 - Copyright: Copyright (c) 2026 Kiratchi
 
-The ten `.vrma` assets in `public/motions/` were generated from the JSON specifications in `motions/specs/` using the upstream `tools/spec2vrma.mjs` workflow. No Text-To-VRMA application source is vendored into this repository.
+The ten `.vrma` assets in `public/motions/` were generated from the JSON specifications in `motions/specs/`. The MIT-licensed v1.1.4 VRMA builder and its license are vendored under `tools/text-to-vrma-v1.1.4/` so the published files can be rebuilt deterministically. The ARDY engine and model weights are not vendored.
 
 ## @pixiv/three-vrm-animation
 

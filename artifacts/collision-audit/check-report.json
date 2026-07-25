@@ -1,0 +1,107 @@
+{
+  "mode": "check",
+  "reports": [
+    {
+      "file": "motions/specs/05-idle-breathe.json",
+      "motion": "A calm woman stands in place, breathing slowly, subtly shift",
+      "frames": 255,
+      "collisionFrames": 0,
+      "worstPenetrationMm": 0,
+      "duration": 6.35,
+      "sourceFrames": 128,
+      "auditFps": 40,
+      "collisionRanges": [],
+      "worstFrames": [],
+      "correction": {
+        "maxAxisDelta": 33.014700000000005,
+        "maxFrameDelta": 3.1172999999999966,
+        "correctedValues": 889
+      }
+    },
+    {
+      "file": "motions/specs/06-idle-listen.json",
+      "motion": "A cautious woman stands in place, hears a sound to her side,",
+      "frames": 287,
+      "collisionFrames": 0,
+      "worstPenetrationMm": 0,
+      "duration": 7.15,
+      "sourceFrames": 144,
+      "auditFps": 40,
+      "collisionRanges": [],
+      "worstFrames": [],
+      "correction": {
+        "maxAxisDelta": 36.764700000000005,
+        "maxFrameDelta": 2.133800000000001,
+        "correctedValues": 1143
+      }
+    },
+    {
+      "file": "motions/specs/07-idle-suspicion.json",
+      "motion": "A suspicious detective stands in place, leans back slightly,",
+      "frames": 271,
+      "collisionFrames": 0,
+      "worstPenetrationMm": 0,
+      "duration": 6.75,
+      "sourceFrames": 136,
+      "auditFps": 40,
+      "collisionRanges": [],
+      "worstFrames": [],
+      "correction": {
+        "maxAxisDelta": 30.000000000000007,
+        "maxFrameDelta": 0.6036000000000001,
+        "correctedValues": 816
+      }
+    },
+    {
+      "file": "motions/specs/08-talk-calm.json",
+      "motion": "A calm woman explains something clearly while standing, usin",
+      "frames": 223,
+      "collisionFrames": 0,
+      "worstPenetrationMm": 0,
+      "duration": 5.55,
+      "sourceFrames": 112,
+      "auditFps": 40,
+      "collisionRanges": [],
+      "worstFrames": [],
+      "correction": {
+        "maxAxisDelta": 36.8604,
+        "maxFrameDelta": 5.904299999999996,
+        "correctedValues": 612
+      }
+    },
+    {
+      "file": "motions/specs/09-talk-whisper.json",
+      "motion": "A secretive woman leans closer while standing, steps one foo",
+      "frames": 191,
+      "collisionFrames": 0,
+      "worstPenetrationMm": 0,
+      "duration": 4.75,
+      "sourceFrames": 96,
+      "auditFps": 40,
+      "collisionRanges": [],
+      "worstFrames": [],
+      "correction": {
+        "maxAxisDelta": 33.2002,
+        "maxFrameDelta": 7.848600000000001,
+        "correctedValues": 642
+      }
+    },
+    {
+      "file": "motions/specs/10-talk-press.json",
+      "motion": "A determined interrogator steps forward slightly, points and",
+      "frames": 207,
+      "collisionFrames": 0,
+      "worstPenetrationMm": 0,
+      "duration": 5.15,
+      "sourceFrames": 104,
+      "auditFps": 40,
+      "collisionRanges": [],
+      "worstFrames": [],
+      "correction": {
+        "maxAxisDelta": 31.7022,
+        "maxFrameDelta": 9.3603,
+        "correctedValues": 397
+      }
+    }
+  ]
+}
